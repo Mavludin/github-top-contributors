@@ -1,10 +1,20 @@
+'use client'
+
+import { useState } from "react";
+
 type RegionFormProps = Readonly<{
-  region: string;
+  setRegion: (value: string) => void;
 }>;
 
-export const RegionForm = () => {
+export const RegionForm = ({ setRegion }: RegionFormProps) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setRegion(e.target.region.value)
+  }
+
   return (
-    <form className="my-2 flex gap-2">
+    <form onSubmit={handleSubmit} className="my-2 flex gap-2">
       <input
         name="region"
         type="search"

@@ -1,26 +1,28 @@
 'use client';
 
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-
-const years = [2020, 2021, 2022, 2023, 2024]
+import { YEARS } from '../data';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const YearForm = () => {
-  const [selected, setSelected] = useState(years[years.length - 1])
+type YearFormProps = {
+  year: number
+  setYear: (value: number) => void
+}
 
+export const YearForm = ({ year, setYear }: YearFormProps) => {
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={year} onChange={setYear}>
       {({ open }) => (
         <>
           <div className="relative mt-2">
             <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
               <span className="flex items-center">
-                <span className="ml-3 block truncate">{selected}</span>
+                <span className="ml-3 block truncate">{year}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -35,7 +37,7 @@ export const YearForm = () => {
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {years.map((year) => (
+                {YEARS.map((year) => (
                   <Listbox.Option
                     key={year}
                     className={({ active }) =>

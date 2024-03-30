@@ -1,13 +1,24 @@
-type HeaderProps = Readonly<{
-    region: string
-}>
+"use client";
 
-export const Header = ({
-  region,
-}: HeaderProps) => {
-  return (
-    <h1 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-      Region: {region}
-    </h1>
-  );
+import { Region } from "./region";
+import { RegionForm } from "./regionForm";
+import { YearForm } from "./yearForm";
+
+type HeaderProps = {
+  region: string
+  year: number
+  setRegion: (value: string) => void
+  setYear: (value: number) => void
 }
+
+export const Header = ({ region, year, setRegion, setYear }: HeaderProps) => {
+  return (
+    <header>
+      <Region name={region} />
+
+      <YearForm year={year} setYear={setYear} />
+
+      <RegionForm setRegion={setRegion} />
+    </header>
+  );
+};
