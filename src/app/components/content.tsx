@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Header } from "./header";
 import { getUsers, getUsersContributions } from "../api";
 import { Users } from "./users";
-import type { Contributions, UserItem, UsersResponse } from "../types";
+import type { Contributions, UsersResponse } from "../types";
 import { PER_PAGE, YEARS } from "../data";
 import { Pagination } from "./pagination";
 
@@ -15,7 +15,7 @@ export const Content = () => {
 
   const [region, setRegion] = useState(REGION);
 
-  const [year, setYear] = useState(YEARS[YEARS.length - 1]);
+  const [year, setYear] = useState(YEARS[0]);
 
   const [usersData, setUsersData] = useState<UsersResponse>();
 
@@ -28,6 +28,8 @@ export const Content = () => {
       const usersData = await getUsers(region, page);
 
       if (usersData === undefined) return
+
+      console.log(usersData.items)
       
       const contributionsData = 
         await getUsersContributions(usersData.items, year)

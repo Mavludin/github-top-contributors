@@ -10,8 +10,6 @@ export const Users = ({ users, contributions }: UsersProps) => {
   return (
     <ul role="list" className="divide-y divide-gray-100">
       {users.map((user) => {
-        if (contributions?.[user.login] === 0) return null;
-
         return (
           <li key={user.id} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
