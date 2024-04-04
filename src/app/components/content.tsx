@@ -19,17 +19,26 @@ export const Content = () => {
   const [contributions, setContributions] = useState<Contributions>();
 
   useEffect(() => {
-    getUsers(region).then((data) => setUsers(data?.items));
-  }, [region]);
+    const getData = async () => {
+      const usersData = await getUsers(region);
 
-  useEffect(() => {
-    if (users !== undefined && users?.length !== 0) {
-      getUsersContributions(users, year).then((data) => setContributions(data));
+      if (usersData === undefined) return
+      
+      const contributionsData = 
+        await getUsersContributions(usersData.items, year)
+
+      setUsers(usersData.items)
+
+      if (contributionsData === undefined) return
+
+      setContributions(contributionsData)
     }
-  }, [users, year]);
+
+    getData()
+  }, [region, year]);
 
   return (
-    <main>
+    <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header
         year={year}
         setYear={setYear}
@@ -37,9 +46,12 @@ export const Content = () => {
         setRegion={setRegion}
       />
 
-      {users !== undefined && contributions !== undefined && (
-        <Users contributions={contributions} users={users} />
-      )}
-    </main>
+      <main>
+        {users !== undefined && contributions !== undefined && (
+          <Users contributions={contributions} users={users} />
+        )}
+      </main>
+
+    </div>
   );
 };

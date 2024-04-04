@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Header } from "./components/header";
 import { Content } from "./components/content";
 
 export const metadata: Metadata = {
@@ -8,8 +7,6 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Content />
-    </main>
+    <Content />
   );
 }
