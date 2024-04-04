@@ -1,3 +1,8 @@
+export type UsersResponse = {
+  items: UserItem[]
+  total_count: number
+}
+
 export type UserItem = {
   id: number
   login: string

@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { Header } from "./header";
 import { getUsers, getUsersContributions } from "../api";
 import { Users } from "./users";
-import type { Contributions, UserItem } from "../types";
-import { YEARS } from "../data";
+import type { Contributions, UserItem, UsersResponse } from "../types";
+import { PER_PAGE, YEARS } from "../data";
+import { Pagination } from "./pagination";
 
 const REGION = "Dagestan";
 
@@ -16,20 +17,22 @@ export const Content = () => {
 
   const [year, setYear] = useState(YEARS[YEARS.length - 1]);
 
-  const [users, setUsers] = useState<UserItem[]>();
+  const [usersData, setUsersData] = useState<UsersResponse>();
 
   const [contributions, setContributions] = useState<Contributions>();
 
+  const [page, setPage] = useState(1)
+
   useEffect(() => {
     const getData = async () => {
-      const usersData = await getUsers(region);
+      const usersData = await getUsers(region, page);
 
       if (usersData === undefined) return
       
       const contributionsData = 
         await getUsersContributions(usersData.items, year)
 
-      setUsers(usersData.items)
+      setUsersData(usersData)
 
       if (contributionsData === undefined) return
 
@@ -44,7 +47,7 @@ export const Content = () => {
       setLoading(false)
     })();
 
-  }, [region, year]);
+  }, [page, region, year]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -61,8 +64,12 @@ export const Content = () => {
       )}
 
       <main>
-        {!loading && users !== undefined && contributions !== undefined && (
-          <Users contributions={contributions} users={users} />
+        {!loading && usersData?.items !== undefined && contributions !== undefined && (
+          <>
+            <Users contributions={contributions} users={usersData.items} />
+
+            <Pagination perPage={PER_PAGE} count={usersData.total_count} page={page} setPage={setPage} />
+          </>
         )}
       </main>
 

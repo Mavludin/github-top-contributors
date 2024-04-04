@@ -1,15 +1,15 @@
-import { Contributions, UserItem } from "../types";
+import { Contributions, UserItem, UsersResponse } from "../types";
 
-export const getUsers = async (region: string) => {
+import { PER_PAGE } from '../data'
+
+export const getUsers = async (region: string, page: number) => {
   try {
     const response = await fetch(
-      `https://api.github.com/search/users?q=${encodeURIComponent(
-        `location:${region}`
-      )}`
+      `https://api.github.com/search/users?q=location:${region}&page=${page}&per_page=${PER_PAGE}`,
     );
 
     if (response.ok) {
-      return (await response.json()) as Promise<{ items: UserItem[] }>;
+      return (await response.json()) as Promise<UsersResponse>;
     }
 
     throw new Error("Ошибка при получении пользователей");
