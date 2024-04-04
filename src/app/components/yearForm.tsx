@@ -10,13 +10,14 @@ function classNames(...classes) {
 }
 
 type YearFormProps = {
+  loading: boolean
   year: number
   setYear: (value: number) => void
 }
 
-export const YearForm = ({ year, setYear }: YearFormProps) => {
+export const YearForm = ({ loading, year, setYear }: YearFormProps) => {
   return (
-    <Listbox value={year} onChange={setYear}>
+    <Listbox disabled={loading} value={year} onChange={setYear}>
       {({ open }) => (
         <>
           <div className="relative mt-2">

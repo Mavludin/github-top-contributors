@@ -5,20 +5,27 @@ import { RegionForm } from "./regionForm";
 import { YearForm } from "./yearForm";
 
 type HeaderProps = {
-  region: string
-  year: number
-  setRegion: (value: string) => void
-  setYear: (value: number) => void
-}
+  loading: boolean;
+  region: string;
+  year: number;
+  setRegion: (value: string) => void;
+  setYear: (value: number) => void;
+};
 
-export const Header = ({ region, year, setRegion, setYear }: HeaderProps) => {
+export const Header = ({
+  loading,
+  region,
+  year,
+  setRegion,
+  setYear,
+}: HeaderProps) => {
   return (
     <header>
       <Region name={region} />
 
-      <YearForm year={year} setYear={setYear} />
+      <YearForm loading={loading} year={year} setYear={setYear} />
 
-      <RegionForm setRegion={setRegion} />
+      <RegionForm loading={loading} setRegion={setRegion} />
     </header>
   );
 };
