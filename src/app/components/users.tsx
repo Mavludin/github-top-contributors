@@ -41,7 +41,6 @@ export const Users = ({ users, contributions }: UsersProps) => {
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  <span className="absolute inset-0" aria-hidden="true" />
                   Profile <span aria-hidden="true">&rarr;</span>
                 </a>
               </p>
