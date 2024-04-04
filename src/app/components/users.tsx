@@ -34,6 +34,17 @@ export const Users = ({ users, contributions }: UsersProps) => {
               <p className="text-sm leading-6 text-gray-900">
                 Contributions: {contributions?.[user.login]}
               </p>
+              <p className="text-sm leading-6 text-gray-900">
+                <a
+                  href={user.html_url}
+                  className="font-semibold text-indigo-600"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  <span className="absolute inset-0" aria-hidden="true" />
+                  Profile <span aria-hidden="true">&rarr;</span>
+                </a>
+              </p>
             </div>
           </li>
         );
