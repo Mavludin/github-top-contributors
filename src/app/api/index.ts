@@ -30,7 +30,16 @@ export const getUsersContributions = async (users: UserItem[], year: number) => 
   for (const user of users) {
     const promise = fetch(
       `https://github-contributions-api.deno.dev/${user.login}.json?from=${year}-01-01&tofrom=${year}-12-31`
-    ).then((res) => res.json());
+    ).then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+
+      return {
+        contributions: [],
+        totalContributions: 0
+      }
+    })
 
     promises.push(promise);
   }
