@@ -8,7 +8,7 @@ type UsersProps = {
 
 export const Users = ({ users, contributions }: UsersProps) => {
   return (
-    <ul role="list" className="divide-y divide-gray-100">
+    <ul role="list" className="divide-y divide-gray-100 border shadow-md px-5 rounded">
       {users.map((user) => {
         return (
           <li key={user.id} className="flex justify-between gap-x-6 py-5">

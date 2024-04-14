@@ -4,50 +4,53 @@ import { useEffect, useState } from "react";
 import { Header } from "./header";
 import { getUsers, getUsersContributions } from "../api";
 import { Users } from "./users";
-import type { Contributions, UsersResponse } from "../types";
-import { PER_PAGE, YEARS } from "../data";
+import type { Contributions, UserItem, UsersResponse } from "../types";
+import { INITIAL_REGION, PER_PAGE, YEARS } from "../data";
 import { Pagination } from "./pagination";
 
-const REGION = "Dagestan";
+type ContentProps = {
+  initialUsersData: UsersResponse
+  initialContributions: Contributions
+}
 
-export const Content = () => {
+export const Content = ({ initialUsersData, initialContributions }: ContentProps) => {
   const [loading, setLoading] = useState(false)
 
-  const [region, setRegion] = useState(REGION);
+  const [region, setRegion] = useState(INITIAL_REGION);
 
   const [year, setYear] = useState(YEARS[0]);
 
-  const [usersData, setUsersData] = useState<UsersResponse>();
+  const [usersData, setUsersData] = useState<UsersResponse>(initialUsersData);
 
-  const [contributions, setContributions] = useState<Contributions>();
+  const [contributions, setContributions] = useState<Contributions>(initialContributions);
 
   const [page, setPage] = useState(1)
 
-  useEffect(() => {
-    const getData = async () => {
-      const usersData = await getUsers(region, page);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const usersData = await getUsers(region, page);
 
-      if (usersData === undefined) return
+  //     if (usersData === undefined) return
 
-      const contributionsData = 
-        await getUsersContributions(usersData.items, year)
+  //     const contributionsData = 
+  //       await getUsersContributions(usersData.items, year)
 
-      setUsersData(usersData)
+  //     setUsersData(usersData)
 
-      if (contributionsData === undefined) return
+  //     if (contributionsData === undefined) return
 
-      setContributions(contributionsData);
-    };
+  //     setContributions(contributionsData);
+  //   };
 
-    (async () => {
-      setLoading(true)
+  //   (async () => {
+  //     setLoading(true)
 
-      await getData()
+  //     await getData()
 
-      setLoading(false)
-    })();
+  //     setLoading(false)
+  //   })();
 
-  }, [page, region, year]);
+  // }, [page, region, year]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
