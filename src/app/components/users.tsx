@@ -26,7 +26,14 @@ export const Users = ({ users, contributions }: UsersProps) => {
                   {user.login}
                 </p>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                  <a
+                    href={`mailto:${user.html_url}`}
+                    className="font-semibold text-sky-600"
+                    rel="noreferrer noopener"
+                    target="_blank"
+                  >
                   test@gmail.com
+                </a>
                 </p>
               </div>
             </div>

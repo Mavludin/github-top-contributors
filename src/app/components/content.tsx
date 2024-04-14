@@ -29,8 +29,6 @@ export const Content = () => {
 
       if (usersData === undefined) return
 
-      console.log(usersData.items)
-      
       const contributionsData = 
         await getUsersContributions(usersData.items, year)
 
