@@ -5,7 +5,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { YEARS } from '../data';
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -43,7 +43,9 @@ export const YearForm = ({ loading, year, setYear }: YearFormProps) => {
                     key={year}
                     className={({ active }) =>
                       classNames(
-                        active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                        active 
+                          ? 'bg-indigo-600 text-white' 
+                          : 'text-gray-900',
                         'relative cursor-default select-none py-2 pl-3 pr-9'
                       )
                     }

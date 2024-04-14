@@ -5,11 +5,17 @@ type RegionFormProps = Readonly<{
   setRegion: (value: string) => void
 }>;
 
+type FormData = {
+  region: { value: string }
+}
+
 export const RegionForm = ({ loading, setRegion }: RegionFormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setRegion(e.target.region.value)
+    const { region } = e.target as typeof e.target & FormData
+
+    setRegion(region.value)
   }
 
   return (
