@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Header } from "./header";
 import { getUsers, getUsersContributions } from "../api";
 import { Users } from "./users";
-import type { Contributions, UserItem, UsersResponse } from "../types";
-import { INITIAL_REGION, PER_PAGE, YEARS } from "../data";
+import type { Contributions, UsersResponse } from "../types";
+import { PER_PAGE } from "../data";
 import { Pagination } from "./pagination";
 
 type ContentProps = {
@@ -16,8 +16,6 @@ type ContentProps = {
 export const Content = ({ initialUsersData, initialContributions }: ContentProps) => {
   const [loading, setLoading] = useState(false)
 
-  const [region, setRegion] = useState(INITIAL_REGION);
-
   const [usersData, setUsersData] = useState<UsersResponse>(initialUsersData);
 
   const [contributions, setContributions] = useState<Contributions>(initialContributions);
@@ -27,6 +25,22 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
   const refetchUsersContributions = async (year: number) => {
     const contributions = 
       await getUsersContributions({ users: usersData?.items ?? [], year })
+
+    if (contributions === undefined) return
+
+    setContributions(contributions)
+  }
+
+  const refetchUsersData = async (region: string, year: number) => {
+    const usersData = 
+      await getUsers({ region, page: 1 })
+
+    if (usersData === undefined) return
+
+    const contributions = 
+      await getUsersContributions({ users: usersData?.items ?? [], year })
+
+    setUsersData(usersData)
 
     if (contributions === undefined) return
 
@@ -63,9 +77,8 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header
         loading={loading}
-        region={region}
-        setRegion={setRegion}
         refetchUsersContributions={refetchUsersContributions}
+        refetchUsersData={refetchUsersData}
       />
       
       {loading && (
@@ -77,7 +90,8 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
           <>
             <Users contributions={contributions} users={usersData.items} />
 
-            <Pagination perPage={PER_PAGE} count={usersData.total_count} page={page} setPage={setPage} />
+            {/* TODO - use another Pagination element */}
+            {/* <Pagination perPage={PER_PAGE} count={usersData.total_count} page={page} setPage={setPage} /> */}
           </>
         )}
       </main>
