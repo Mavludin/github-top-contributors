@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { YEARS } from '../data';
@@ -11,13 +11,20 @@ function classNames(...classes: string[]) {
 
 type YearFormProps = {
   loading: boolean
-  year: number
-  setYear: (value: number) => void
+  refetchUsersContributions: (year: number) => void
 }
 
-export const YearForm = ({ loading, year, setYear }: YearFormProps) => {
+export const YearForm = ({ loading, refetchUsersContributions }: YearFormProps) => {
+  const [year, setYear] = useState(YEARS[0]);
+
+  const handleChange = async (newYear: number) => {
+    setYear(year)
+
+    refetchUsersContributions(newYear)
+  }
+  
   return (
-    <Listbox disabled={loading} value={year} onChange={setYear}>
+    <Listbox disabled={loading} value={year} onChange={handleChange}>
       {({ open }) => (
         <>
           <div className="relative mt-2">

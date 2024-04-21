@@ -18,13 +18,20 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
 
   const [region, setRegion] = useState(INITIAL_REGION);
 
-  const [year, setYear] = useState(YEARS[0]);
-
   const [usersData, setUsersData] = useState<UsersResponse>(initialUsersData);
 
   const [contributions, setContributions] = useState<Contributions>(initialContributions);
 
   const [page, setPage] = useState(1)
+
+  const refetchUsersContributions = async (year: number) => {
+    const contributions = 
+      await getUsersContributions({ users: usersData?.items ?? [], year })
+
+    if (contributions === undefined) return
+
+    setContributions(contributions)
+  }
 
   // useEffect(() => {
   //   const getData = async () => {
@@ -56,10 +63,9 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header
         loading={loading}
-        year={year}
-        setYear={setYear}
         region={region}
         setRegion={setRegion}
+        refetchUsersContributions={refetchUsersContributions}
       />
       
       {loading && (

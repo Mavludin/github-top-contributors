@@ -1,5 +1,6 @@
 "use client";
 
+import { Contributions, UsersResponse } from "../types";
 import { Region } from "./region";
 import { RegionForm } from "./regionForm";
 import { YearForm } from "./yearForm";
@@ -7,23 +8,24 @@ import { YearForm } from "./yearForm";
 type HeaderProps = {
   loading: boolean;
   region: string;
-  year: number;
   setRegion: (value: string) => void;
-  setYear: (value: number) => void;
+  refetchUsersContributions: (year: number) => void;
 };
 
 export const Header = ({
   loading,
   region,
-  year,
   setRegion,
-  setYear,
+  refetchUsersContributions,
 }: HeaderProps) => {
   return (
     <header>
       <Region name={region} />
 
-      <YearForm loading={loading} year={year} setYear={setYear} />
+      <YearForm
+        loading={loading}
+        refetchUsersContributions={refetchUsersContributions}
+      />
 
       <RegionForm loading={loading} setRegion={setRegion} />
     </header>
