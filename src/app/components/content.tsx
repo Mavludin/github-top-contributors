@@ -73,10 +73,15 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
             <Pagination
               isCompact
               showControls
+              size="lg"
               total={Math.ceil(usersData.total_count / PER_PAGE)}
               initialPage={1}
               onChange={(page) => {
                 refetchUsersData(region, year, page)
+              }}
+              classNames={{
+                base: "mt-4",
+                wrapper: "m-auto p-0"
               }}
             />
           </>
