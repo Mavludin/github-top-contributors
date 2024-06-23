@@ -18,7 +18,7 @@ type YearFormProps = {
 
 export const YearForm = ({ year, setYear, loading, refetchUsersContributions }: YearFormProps) => {
   const handleChange = async (newYear: number) => {
-    setYear(year)
+    setYear(newYear)
 
     refetchUsersContributions(newYear)
   }
