@@ -3,29 +3,29 @@
 import { INITIAL_REGION } from "../data";
 
 type RegionFormProps = Readonly<{
-  year: number
+  region: string
+  setRegion: (value: string) => void
   loading: boolean
-  refetchUsersData: (region: string, year: number) => void;
 }>;
 
 type FormData = {
   region: { value: string }
 }
 
-export const RegionForm = ({ year, loading, refetchUsersData }: RegionFormProps) => {
+export const RegionForm = ({ region, setRegion, loading }: RegionFormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { region } = e.target as typeof e.target & FormData
 
-    refetchUsersData(region.value, year)
+    setRegion(region.value)
   }
 
   return (
     <div className="flex">
       <form onSubmit={handleSubmit} className="my-2 flex gap-2">
         <input
-          defaultValue={INITIAL_REGION}
+          defaultValue={region}
           name="region"
           type="search"
           autoComplete="current-password"

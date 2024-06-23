@@ -6,18 +6,22 @@ import { YearForm } from "./yearForm";
 import { YEARS } from "../data";
 
 type HeaderProps = {
-  loading: boolean;
-  refetchUsersContributions: (year: number) => void;
-  refetchUsersData: (region: string, year: number) => void;
+  year: number
+  setYear: (value: number) => void
+  region: string
+  setRegion: (value: string) => void
+  loading: boolean
+  refetchUsersContributions: (year: number) => void
 };
 
 export const Header = ({
+  year,
+  setYear,
+  region,
+  setRegion,
   loading,
-  refetchUsersData,
   refetchUsersContributions,
 }: HeaderProps) => {
-  const [year, setYear] = useState(YEARS[0]);
-
   return (
     <header>
       <YearForm
@@ -28,9 +32,9 @@ export const Header = ({
       />
 
       <RegionForm
-        year={year}
+        region={region}
+        setRegion={setRegion}
         loading={loading}
-        refetchUsersData={refetchUsersData}
       />
     </header>
   );

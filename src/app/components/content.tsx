@@ -5,8 +5,9 @@ import { Header } from "./header";
 import { getUsers, getUsersContributions } from "../api";
 import { Users } from "./users";
 import type { Contributions, UsersResponse } from "../types";
-import { PER_PAGE } from "../data";
-import { Pagination } from "./pagination";
+import { INITIAL_REGION, PER_PAGE, YEARS } from "../data";
+
+import {Button, Pagination} from "@nextui-org/react";
 
 type ContentProps = {
   initialUsersData: UsersResponse
@@ -20,7 +21,9 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
 
   const [contributions, setContributions] = useState<Contributions>(initialContributions);
 
-  const [page, setPage] = useState(1)
+  const [year, setYear] = useState(YEARS[0]);
+
+  const [region, setRegion] = useState(INITIAL_REGION);
 
   const refetchUsersContributions = async (year: number) => {
     const contributions = 
@@ -31,9 +34,9 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
     setContributions(contributions)
   }
 
-  const refetchUsersData = async (region: string, year: number) => {
+  const refetchUsersData = async (region: string, year: number, page: number = 1) => {
     const usersData = 
-      await getUsers({ region, page: 1 })
+      await getUsers({ region, page })
 
     if (usersData === undefined) return
 
@@ -50,9 +53,12 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header
+        year={year}
+        setYear={setYear}
         loading={loading}
         refetchUsersContributions={refetchUsersContributions}
-        refetchUsersData={refetchUsersData}
+        region={region}
+        setRegion={setRegion}
       />
       
       {loading && (
@@ -64,12 +70,18 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
           <>
             <Users contributions={contributions} users={usersData.items} />
 
-            {/* TODO - use another Pagination element */}
-            {/* <Pagination perPage={PER_PAGE} count={usersData.total_count} page={page} setPage={setPage} /> */}
+            <Pagination
+              isCompact
+              showControls
+              total={Math.ceil(usersData.total_count / PER_PAGE)}
+              initialPage={1}
+              onChange={(page) => {
+                refetchUsersData(region, year, page)
+              }}
+            />
           </>
         )}
       </main>
-
     </div>
   );
 };
