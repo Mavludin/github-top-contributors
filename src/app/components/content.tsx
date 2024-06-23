@@ -25,6 +25,8 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
 
   const [region, setRegion] = useState(INITIAL_REGION);
 
+  const [page, setPage] = useState(1);
+
   const refetchUsersContributions = async (year: number) => {
     const contributions = 
       await getUsersContributions({ users: usersData?.items ?? [], year })
@@ -50,6 +52,12 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
     setContributions(contributions)
   }
 
+  const handleRegionChange = (region: string) => {
+    refetchUsersData(region, year, page)
+
+    setRegion(region)
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header
@@ -58,7 +66,7 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
         loading={loading}
         refetchUsersContributions={refetchUsersContributions}
         region={region}
-        setRegion={setRegion}
+        handleRegionChange={handleRegionChange}
       />
       
       {loading && (
@@ -78,6 +86,8 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
               initialPage={1}
               onChange={(page) => {
                 refetchUsersData(region, year, page)
+
+                setPage(page)
               }}
               classNames={{
                 base: "mt-4",

@@ -1,10 +1,8 @@
 'use client'
 
-import { INITIAL_REGION } from "../data";
-
 type RegionFormProps = Readonly<{
   region: string
-  setRegion: (value: string) => void
+  handleRegionChange: (value: string) => void
   loading: boolean
 }>;
 
@@ -12,13 +10,13 @@ type FormData = {
   region: { value: string }
 }
 
-export const RegionForm = ({ region, setRegion, loading }: RegionFormProps) => {
+export const RegionForm = ({ region, handleRegionChange, loading }: RegionFormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { region } = e.target as typeof e.target & FormData
 
-    setRegion(region.value)
+    handleRegionChange(region.value)
   }
 
   return (

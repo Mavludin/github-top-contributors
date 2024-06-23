@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { RegionForm } from "./regionForm";
 import { YearForm } from "./yearForm";
-import { YEARS } from "../data";
 
 type HeaderProps = {
   year: number
   setYear: (value: number) => void
   region: string
-  setRegion: (value: string) => void
+  handleRegionChange: (value: string) => void
   loading: boolean
   refetchUsersContributions: (year: number) => void
 };
@@ -18,7 +16,7 @@ export const Header = ({
   year,
   setYear,
   region,
-  setRegion,
+  handleRegionChange,
   loading,
   refetchUsersContributions,
 }: HeaderProps) => {
@@ -33,7 +31,7 @@ export const Header = ({
 
       <RegionForm
         region={region}
-        setRegion={setRegion}
+        handleRegionChange={handleRegionChange}
         loading={loading}
       />
     </header>
