@@ -47,32 +47,6 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
     setContributions(contributions)
   }
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const usersData = await getUsers(region, page);
-
-  //     if (usersData === undefined) return
-
-  //     const contributionsData = 
-  //       await getUsersContributions(usersData.items, year)
-
-  //     setUsersData(usersData)
-
-  //     if (contributionsData === undefined) return
-
-  //     setContributions(contributionsData);
-  //   };
-
-  //   (async () => {
-  //     setLoading(true)
-
-  //     await getData()
-
-  //     setLoading(false)
-  //   })();
-
-  // }, [page, region, year]);
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header
