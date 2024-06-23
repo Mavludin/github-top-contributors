@@ -58,13 +58,18 @@ export const Content = ({ initialUsersData, initialContributions }: ContentProps
     setRegion(region)
   }
 
+  const handleYearChange = (year: number) => {
+    refetchUsersData(region, year, page)
+
+    setYear(year)
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Header
         year={year}
-        setYear={setYear}
+        handleYearChange={handleYearChange}
         loading={loading}
-        refetchUsersContributions={refetchUsersContributions}
         region={region}
         handleRegionChange={handleRegionChange}
       />

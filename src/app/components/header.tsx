@@ -5,28 +5,25 @@ import { YearForm } from "./yearForm";
 
 type HeaderProps = {
   year: number
-  setYear: (value: number) => void
+  handleYearChange: (value: number) => void
   region: string
   handleRegionChange: (value: string) => void
   loading: boolean
-  refetchUsersContributions: (year: number) => void
 };
 
 export const Header = ({
   year,
-  setYear,
+  handleYearChange,
   region,
   handleRegionChange,
   loading,
-  refetchUsersContributions,
 }: HeaderProps) => {
   return (
     <header>
       <YearForm
         year={year}
-        setYear={setYear}
+        handleYearChange={handleYearChange}
         loading={loading}
-        refetchUsersContributions={refetchUsersContributions}
       />
 
       <RegionForm

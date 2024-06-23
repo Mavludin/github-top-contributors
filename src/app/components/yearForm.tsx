@@ -11,16 +11,13 @@ function classNames(...classes: string[]) {
 
 type YearFormProps = {
   year: number
-  setYear: (value: number) => void
+  handleYearChange: (value: number) => void
   loading: boolean
-  refetchUsersContributions: (year: number) => void
 }
 
-export const YearForm = ({ year, setYear, loading, refetchUsersContributions }: YearFormProps) => {
+export const YearForm = ({ year, handleYearChange, loading }: YearFormProps) => {
   const handleChange = async (newYear: number) => {
-    setYear(newYear)
-
-    refetchUsersContributions(newYear)
+    handleYearChange(newYear)
   }
   
   return (
